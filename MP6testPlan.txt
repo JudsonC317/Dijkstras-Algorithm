@@ -1,0 +1,151 @@
+# MP5testPlan.txt
+# Judson Cooper
+# MP6
+#
+# This is a test plan for MP6. It contains the output of the test script for MP6,
+# commentary on how the output shows the proper functionality of the
+# program, and some details on the implementation of the Dijstra's algorithm.
+#
+# In the test script, the program's ability to properly build a graph is first
+# tested. Graph 1 is constructed, and it can be seen from the printed adjacency
+# matrix that the correct graph is built, with all edges between the expected
+# vertices and of the expected weights. Graph 2 is also built, and each vertice
+# is connected to every other as expected. Finally graph 3 is built, and the
+# actual average adjacent vertices is just under the specified value of 5.
+#
+# Next the graph operations are tested. The shortest path operation is first
+# tested with several different cases to verify it functions properly. The
+# algorithm succesfully prints the correct path when one exists, and states that
+# no path exists when the given source and destination are not connected. The network
+# diameter operation is then tested. It correctly finds the largest path in
+# each case, and also correctly states whether the graph is connected or not.
+# For the multiple link-disjoint paths, it correctly finds the first shortest
+# path, and then succesfully removes each edge in that path from the graph and
+# finds the new shortest path before finding no more paths that exist between
+# the source and destination.
+#
+# To implement the construction of a graph and Dijkstra's algorithm for finding
+# the shortest path between two vertices, a structure was created to hold
+# the important information about the graph. This structure contained a count
+# of the vertices, and an adjacency matrix that was used to hold the edge weights
+# between each vertex. It also held the arrays for the shortest distance and
+# predecessor for each vertex in the graph to be used for Dijkstra's algorithm.
+# Because the function for implementing Dijstra's algorithm is void, it stores
+# its results within these arrays held in the graph's header block. The header block
+# also holds a variable storing the source vertex used in this algorithm.
+# In addition to the implementation of Dijkstra's algorithm, there are functions
+# provided for creating the graph, destroying the graph, adding an edge, removing
+# an edge, and a debug print function that prints the adjacency matrix.
+
+//////////////////////////////////////////////////////////////////////
+
+Verify adjacency matrix is correct for graph 1:
+
+
+Seed: 10212018
+Adjacency matrix for graph of 7 vertices:
+
+	0		1		2		3		4		5		6	
+0	0.000	INF	INF	INF	INF	INF	INF	
+1	INF	0.000	3.000	INF	INF	INF	5.000	
+2	INF	INF	0.000	7.000	3.000	INF	10.000	
+3	INF	INF	INF	0.000	5.000	1.000	INF	
+4	INF	INF	INF	INF	0.000	6.000	INF	
+5	INF	INF	INF	INF	INF	0.000	7.000	
+6	4.000	INF	INF	8.000	9.000	INF	0.000	
+
+//////////////////////////////////////////////////////////////////////
+
+Verify edge between every vertice pair for graph 2:
+
+
+Seed: 10212018
+Adjacency matrix for graph of 5 vertices:
+
+	0			1			2			3			4	
+0	0.000		5.000		8.000		13.000	20.000	
+1	10.000	0.000		8.000		11.000	16.000	
+2	18.000	13.000	0.000		11.000	14.000	
+3	28.000	21.000	16.000	0.000		14.000	
+4	40.000	31.000	24.000	19.000	0.000	
+
+//////////////////////////////////////////////////////////////////////
+
+Verify average adjacent vertices close to 5:
+
+Seed: 10212018
+Average adjacent vertices: 4.828
+Maximum adjacent vertices: 12
+Minimum adjacent vertices: 0
+
+//////////////////////////////////////////////////////////////////////
+
+Verify cost is 11 and path is 1--2--3--5:
+
+Seed: 10212018
+
+The cost to 1 from 5 is 11.000
+1 -- 2 -- 3 -- 5
+Dijkstra's algorithm runtime: 0.002 ms
+
+//////////////////////////////////////////////////////////////////////
+
+Verify a path does not exist between these vertices
+
+Seed: 10212018
+
+A path does not exist between 5 and 1
+
+/////////////////////////////////////////////////////////////////////
+
+Verify cost is 2172 and 11 vertices in path
+
+Seed: 10212018
+
+The cost to 0 from 99 is 2172.000
+0 -- 3 -- 7 -- 13 -- 21 -- 30 -- 41 -- 53 -- 67 -- 82 -- 99
+Dijkstra's algorithm runtime: 0.084 ms
+
+/////////////////////////////////////////////////////////////////////
+
+Verfiy diameter is 21 and graph is not connected
+
+Seed: 10212018
+
+Graph contains at least one pair of vertices without a path
+The path from 4 to 3 has the largest cost less than infinity of 21.000
+4 -- 5 -- 6 -- 3
+Network diameter runtime: 0.007 ms
+
+/////////////////////////////////////////////////////////////////////
+
+Verify graph connected (no 'pair of vertices without a path' message
+
+Seed: 10212018
+
+The path from 99 to 0 has the largest cost less than infinity of 2667.000
+99 -- 83 -- 68 -- 54 -- 42 -- 31 -- 22 -- 14 -- 8 -- 3 -- 0
+Network diameter runtime: 9.884 ms
+
+/////////////////////////////////////////////////////////////////////
+
+Verify 1--2--3--5 with cost 11 found first, and
+then 1--6--4--5 with cost 20
+
+Seed: 10212018
+
+The cost to 1 from 5 is 11.000
+1 -- 2 -- 3 -- 5
+This path has now been removed
+
+The cost to 1 from 5 is 20.000
+1 -- 6 -- 4 -- 5
+This path has now been removed
+
+No more paths between 1 and 5
+
+//////////////////////////////////////////////////////////
+
+ 
+
+
